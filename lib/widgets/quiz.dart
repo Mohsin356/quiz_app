@@ -5,7 +5,7 @@ class Quiz extends StatelessWidget {
    required this.answerQuestion }) : super(key: key);
    final List<Map<String,Object>> questions;
    final int questionIndex;
-   final VoidCallback answerQuestion;
+   final Function answerQuestion;
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +14,8 @@ class Quiz extends StatelessWidget {
       children: <Widget>[
         Text(questions[questionIndex]['Question Text'].toString()),
         //map list into list of widgets
-        ...(questions[questionIndex]['answer'] as List<String>).map((answer){
-          return ElevatedButton(onPressed: answerQuestion, child: Text(answer));
+        ...(questions[questionIndex]['answer'] as List<Map<String,Object>>).map((answer){
+          return ElevatedButton(onPressed: ()=>answerQuestion(answer['score']), child: Text(answer['Text'].toString()));
         }).toList()
       ],
     );

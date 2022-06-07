@@ -11,14 +11,39 @@ class MyApp extends StatefulWidget{
 }
 class _MyAppState extends State<MyApp> {
   final _questions=  const [
-    {'Question Text':'What\'s your favourite color?', "answer":['Red','Blue','Green','Yellow']},
-    {'Question Text':'What\'s your favourite animal?', "answer":['Cat','Dog','Panda']},
-    {'Question Text':'What\'s your favourite subject?', "answer":['Science','Geography','Economics']},
+    {'Question Text':'What\'s your favourite color?',
+      "answer":[
+        {'Text':'Red','score':10},
+        {'Text':'Black','score':8},
+        {'Text':'Grey','score':6},
+        {'Text':'Yellow','score':4}
+      ]},
+    {'Question Text':'What\'s your favourite animal?',
+      "answer":[
+        {'Text':'Lion','score':10},
+        {'Text':'Tiger','score':8},
+        {'Text':'Panda','score':6}
+      ]},
+    {'Question Text':'What\'s your favourite subject?',
+      "answer":[
+        {'Text':'Computer','score':10},
+        {'Text':'Biology','score':8},
+        {'Text':'Economics','score':6},
+      ]},
   ];
 
   var _questionIndex= 0;
+  var _totalScore=0;
 
-  void _answerQuestion(){
+  void _resetQuiz(){
+    setState((){
+      _questionIndex=0;
+      _totalScore=0;
+    });
+  }
+
+  void _answerQuestion(int score){
+    _totalScore += score;
    setState((){
      _questionIndex =_questionIndex+1;
    });
@@ -34,12 +59,18 @@ class _MyAppState extends State<MyApp> {
           child: _questionIndex < _questions.length ?
           Quiz(questions: _questions,questionIndex: _questionIndex,answerQuestion: _answerQuestion,
           )
-              :Column(
+              :Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("Quiz Finished"),
+            children:  [
+                Text("Quiz Finished. Your score is: $_totalScore",
+                  style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 30,),textAlign: TextAlign.center,),
+                TextButton(onPressed: _resetQuiz, child: const
+                Text("Restart Quiz" ,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,),))
             ],
           ),
+              ),
         ),
       ),
     );
