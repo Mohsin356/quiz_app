@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Quiz extends StatelessWidget {
-   Quiz({Key? key,required this.questions, required this.questionIndex,
+   const Quiz({Key? key,required this.questions, required this.questionIndex,
    required this.answerQuestion }) : super(key: key);
    final List<Map<String,Object>> questions;
    final int questionIndex;
